@@ -1,0 +1,27 @@
+<div id="<%= dom_id recipe %>" style="border: 1px solid #dee2e6; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+  <h4>
+    <strong><%= recipe.name %></strong>
+  </h4>
+
+  <p>
+    <strong>Cooking time:</strong>
+    <%= recipe.cooking_time %> minutes
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= recipe.description %>
+  </p>
+
+  <% if recipe.user %>
+    <p>
+      <small><strong>By:</strong> <%= recipe.user.full_name %></small>
+    </p>
+  <% end %>
+
+  <% if recipe.ratings.any? %>
+    <p>
+      <small><strong>Average Rating:</strong> <%= recipe.average_rating %>/5 (<%= recipe.ratings.count %> reviews)</small>
+    </p>
+  <% end %>
+</div>

@@ -1,0 +1,29 @@
+<div id="<%= dom_id rating %>" style="border: 1px solid #dee2e6; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; background-color: white;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+    <div>
+      <h5 style="margin: 0 0 0.5rem 0; color: #495057;">
+        <% if rating.recipe %>
+          Recipe: <%= link_to rating.recipe.name, rating.recipe, style: "text-decoration: none; color: #007bff;" %>
+        <% else %>
+          Recipe: Unknown
+        <% end %>
+      </h5>
+      <div style="margin-bottom: 0.5rem;">
+        <span style="color: #ffc107; font-size: 1.1rem;">
+          <%= "★" * rating.score %><%= "☆" * (5 - rating.score) %>
+        </span>
+        <span style="color: #6c757d;">(<%= rating.score %>/5)</span>
+      </div>
+      <% if rating.user %>
+        <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
+          By: <%= rating.user.full_name %> on <%= rating.created_at.strftime("%B %d, %Y") %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+  
+  <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 4px;">
+    <h6 style="margin: 0 0 0.5rem 0; color: #495057;">Review:</h6>
+    <p style="margin: 0; color: #495057; line-height: 1.5;"><%= rating.content %></p>
+  </div>
+</div>

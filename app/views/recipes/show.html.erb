@@ -1,0 +1,51 @@
+<p style="color: green"><%= notice %></p>
+
+<% if alert %>
+  <div style="color: #721c24; margin-bottom: 1rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+    <%= alert %>
+  </div>
+<% end %>
+
+<% content_for :title, @recipe.name %>
+
+<p><strong>Name:</strong> <%= @recipe.name %></p>
+<p><strong>Cooking time:</strong> <%= @recipe.cooking_time %> minutes</p>
+<p><strong>Description:</strong> <%= @recipe.description %></p>
+
+<h3>Ratings</h3>
+<% @recipe.ratings.each do |rating| %>
+  <p>- Score: <%= rating.score %></p>
+  <p>- Comments: <%= rating.content %></p>
+<% end %>
+
+<h3>Add a Rating</h3>
+<% if user_signed_in? %>
+  <% unless @user_rating %>
+    <%= form_with(model: [@recipe, @rating], local: true) do |f| %>
+      <p>
+        Score<br>
+        <%= f.number_field :score, in: 1..5, step: 1, required: true %>
+      </p>
+      <p>
+        Content<br>
+        <%= f.text_area :content, required: true %>
+      </p>
+      <%= f.submit "Submit Rating" %>
+    <% end %>
+  <% else %>
+    <p>You have already rated this recipe.</p>
+  <% end %>
+<% else %>
+  <p>Please sign in to add a rating.</p>
+<% end %>
+
+<p>
+  <% if user_signed_in? && @recipe.user == current_user %>
+    <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+  <% end %>
+  <%= link_to "Back to recipes", recipes_path %>
+</p>
+
+<% if user_signed_in? && @recipe.user == current_user %>
+  <%= button_to "Destroy this recipe", @recipe, method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>

@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Recipes" %>
+
+<h1>Recipes</h1>
+
+<% @recipes.each do |recipe| %>
+  <div style="margin-bottom: 2rem;">
+    <p><strong>Name:</strong> <%= recipe.name %></p>
+    <p><strong>Cooking time:</strong> <%= recipe.cooking_time %> minutes</p>
+    <p><strong>Description:</strong> <%= recipe.description %></p>
+    <p><strong>Average ratings:</strong> <%= recipe.average_rating %></p>
+    <p><%= link_to "Show this recipe", recipe %></p>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to "New recipe", new_recipe_path, style: "background-color: #007bff; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px;" %>
+<% else %>
+  <p style="color: #6c757d; font-style: italic;">
+    <%= link_to "Sign in", new_user_session_path %> to add your own recipes!
+  </p>
+<% end %>

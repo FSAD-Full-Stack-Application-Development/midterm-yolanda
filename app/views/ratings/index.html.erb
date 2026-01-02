@@ -1,0 +1,59 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "My Ratings" %>
+
+<div style="margin-bottom: 2rem;">
+  <h1 style="color: #343a40; margin-bottom: 1rem;">My Ratings</h1>
+  <p style="color: #6c757d;">Here are all the ratings you've submitted for recipes.</p>
+</div>
+
+<% if @ratings.any? %>
+  <div id="ratings">
+    <% @ratings.each do |rating| %>
+      <div style="border: 1px solid #dee2e6; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 6px; background-color: white;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+          <div>
+            <h4 style="margin: 0 0 0.5rem 0; color: #495057;">
+              <%= link_to rating.recipe.name, rating.recipe, style: "text-decoration: none; color: #007bff;" %>
+            </h4>
+            <div style="margin-bottom: 0.5rem;">
+              <span style="color: #ffc107; font-size: 1.2rem;">
+                <%= "★" * rating.score %><%= "☆" * (5 - rating.score) %>
+              </span>
+              <span style="color: #6c757d;">(<%= rating.score %>/5)</span>
+            </div>
+            <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
+              Rated on <%= rating.created_at.strftime("%B %d, %Y") %>
+            </p>
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem;">
+            <%= link_to "View Recipe", rating.recipe, 
+                style: "color: #007bff; text-decoration: none; padding: 0.3rem 0.8rem; border: 1px solid #007bff; border-radius: 4px; font-size: 0.8rem;" %>
+            <%= link_to "Edit Rating", edit_rating_path(rating), 
+                style: "color: #ffc107; text-decoration: none; padding: 0.3rem 0.8rem; border: 1px solid #ffc107; border-radius: 4px; font-size: 0.8rem;" %>
+            <%= link_to "Delete", rating_path(rating), data: { "turbo-method": :delete, confirm: "Are you sure you want to delete this rating?" }, 
+                style: "color: #dc3545; text-decoration: none; padding: 0.3rem 0.8rem; border: 1px solid #dc3545; border-radius: 4px; font-size: 0.8rem;" %>
+          </div>
+        </div>
+        
+        <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 4px;">
+          <h5 style="margin: 0 0 0.5rem 0; color: #495057;">Your Review:</h5>
+          <p style="margin: 0; color: #495057; line-height: 1.5;"><%= rating.content %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div style="background-color: #f8f9fa; padding: 3rem; border-radius: 4px; text-align: center;">
+    <h3 style="color: #495057; margin-bottom: 1rem;">No Ratings Yet</h3>
+    <p style="color: #6c757d; margin-bottom: 1.5rem;">You haven't rated any recipes yet. Browse recipes and share your thoughts!</p>
+    <%= link_to "Browse Recipes", recipes_path, 
+        style: "background-color: #007bff; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-size: 1rem;" %>
+  </div>
+<% end %>
+
+<div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #dee2e6;">
+  <%= link_to "← Back to Recipes", recipes_path, 
+      style: "background-color: #6c757d; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-size: 1rem;" %>
+</div>

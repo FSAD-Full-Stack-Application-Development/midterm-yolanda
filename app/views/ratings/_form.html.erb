@@ -1,0 +1,33 @@
+<%= form_with(model: rating, local: true) do |form| %>
+  <% if rating.errors.any? %>
+    <div style="color: #721c24; margin-bottom: 1.5rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+      <h4 style="margin: 0 0 0.5rem 0;">Please fix the following errors:</h4>
+      <ul style="margin: 0; padding-left: 1.5rem;">
+        <% rating.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="background-color: white; padding: 2rem; border: 1px solid #dee2e6; border-radius: 6px;">
+    <div style="margin-bottom: 1.5rem;">
+      <%= form.label :score, "Rating (1-5)", style: "display: block; font-weight: bold; color: #495057; margin-bottom: 0.5rem;" %>
+      <%= form.number_field :score, in: 1..5, step: 1, required: true, 
+          style: "width: 100px; padding: 0.5rem; border: 1px solid #ced4da; border-radius: 4px; font-size: 1rem;" %>
+      <small style="color: #6c757d; display: block; margin-top: 0.25rem;">Select a rating from 1 (poor) to 5 (excellent)</small>
+    </div>
+
+    <div style="margin-bottom: 1.5rem;">
+      <%= form.label :content, "Your Review", style: "display: block; font-weight: bold; color: #495057; margin-bottom: 0.5rem;" %>
+      <%= form.text_area :content, rows: 4, required: true, 
+          style: "width: 100%; padding: 0.75rem; border: 1px solid #ced4da; border-radius: 4px; font-size: 1rem; resize: vertical;" %>
+      <small style="color: #6c757d; display: block; margin-top: 0.25rem;">Share your thoughts about this recipe (minimum 10 characters)</small>
+    </div>
+
+    <div>
+      <%= form.submit rating.persisted? ? "Update Rating" : "Submit Rating", 
+          style: "background-color: #28a745; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;" %>
+    </div>
+  </div>
+<% end %>

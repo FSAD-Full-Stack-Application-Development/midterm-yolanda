@@ -1,0 +1,22 @@
+<% content_for :title, "Edit Rating" %>
+
+<div style="margin-bottom: 2rem;">
+  <h1 style="color: #343a40; margin-bottom: 1rem;">Edit Your Rating</h1>
+  <% if @rating.recipe %>
+    <p style="color: #6c757d;">Editing your rating for: <%= link_to @rating.recipe.name, @rating.recipe, style: "color: #007bff; text-decoration: none;" %></p>
+  <% end %>
+</div>
+
+<%= render "form", rating: @rating %>
+
+<div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #dee2e6;">
+  <div style="display: flex; gap: 1rem; align-items: center;">
+    <%= link_to "← Cancel", @rating.recipe || ratings_path, 
+        style: "background-color: #6c757d; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; font-size: 1rem;" %>
+    
+    <% if @rating.recipe %>
+      <%= link_to "Back to Recipe", @rating.recipe, 
+          style: "color: #007bff; text-decoration: none; padding: 0.75rem 1.5rem; border: 1px solid #007bff; border-radius: 4px; font-size: 1rem;" %>
+    <% end %>
+  </div>
+</div>
